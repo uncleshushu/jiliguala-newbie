@@ -1,45 +1,17 @@
-(ns newbie.domain
+(ns newbie.service.weixin-service
   (:require
-    [schema.core :as s]
     [clj-http.client :as client]
     [clojure.tools.logging :as log]
     [cheshire.core :as cheshire]
     [ring.util.codec :as encoder]
+    [newbie.util.response-util :as res]
     ))
 
-;; Domain
 (def APP_ID "wx949359209ebdbc3f")
 (def APP_SECRET "fbebd2283a5c9fa914eb595284e37426")
 (def SCOPE "snsapi_userinfo")
 (def STATE "state")
 (def TIMEOUT 200)
-
-(s/defschema Base
-  {:result s/Str})
-
-(s/defschema Response
-  {:isSuccess s/Bool
-   :errcode s/Int
-   :errmsg s/Str
-   :result {s/Keyword s/Any}})
-
-;; Helper
-(defn failResponse
-  ([errcode errmsg]
-   {:isSuccess false
-    :errcode errcode
-    :errmsg errmsg
-    :result {}})
-  ([response]
-   (failResponse (:errcode response) (:errmsg response)))
-  )
-
-(defn succResponse
-  [result]
-  {:isSuccess true
-   :errcode 0
-   :errmsg ""
-   :result result})
 
 (defn get-weixin-accesstoken
   "Get weixin access token by code"
@@ -56,8 +28,8 @@
       (if (:errcode weixin-response)
         (do
           (log/error "get access token failed: " (:errcode weixin-response))
-          (failResponse weixin-response))
-        (succResponse weixin-response)))
+          (res/failResponse weixin-response))
+        (res/succResponse weixin-response)))
     (catch Exception e
       (log/error ( "get access token error: " (.getMessage e))))))
 
@@ -74,15 +46,10 @@
       (if (:errcode weixin-response)
         (do
           (log/error "get open user info failed: " (:errcode weixin-response))
-          (failResponse weixin-response))
-        (succResponse weixin-response)))
+          (res/failResponse weixin-response))
+        (res/succResponse weixin-response)))
     (catch Exception e
       (log/error ("get open user info error: " (.getMessage e))))))
-
-;; Repository
-(defn hello-world
-  []
-  {:result "Hello World"})
 
 (defn weixin-info
   [code state]
@@ -106,6 +73,4 @@
             (:response_type query-params)
             (:scope query-params)
             (:state query-params))))
-
-
 

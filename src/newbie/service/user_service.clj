@@ -1,31 +1,30 @@
-(ns newbie.user-service
+(ns newbie.service.user-service
   (:require
     [clojure.tools.logging :as log]
     [newbie.repository.mongodb :as mg]
-    [newbie.domain :as domain]
-    )
-  )
+    [newbie.util.response-util :as res]
+    ))
 
 (defn login
   [openid]
   (let [user (mg/find-user-by-openid openid)]
     (if (nil? user)
       (do (log/warn "unregister user, openid: " openid)
-          (domain/failResponse 40200 "unregister user"))
+          (res/failResponse 40200 "unregister user"))
       (do (log/info "user login, openid: " openid)
-          (domain/succResponse (.toJson user))))))
+          (res/succResponse (.toJson user))))))
 
 (defn register
   [userinfo]
   (let [{:keys [openid]} userinfo
         exist (mg/find-user-by-openid openid)]
     (cond (nil? openid) (do (log/error "openid is empty")
-                            (domain/failResponse 40000 "empty openid"))
+                            (res/failResponse 40000 "empty openid"))
           (some? exist) (do (log/error "openid has already been registered")
-                            (domain/failResponse 40100 "already registered"))
+                            (res/failResponse 40100 "already registered"))
           :else (do (mg/add-user userinfo)
                     (log/info "user registered, openid: " openid)
-                    (domain/succResponse "register succeed")))))
+                    (res/succResponse "register succeed")))))
 
 (defn order
   [openid pid]
@@ -34,12 +33,12 @@
         order_able (and user product)]
     (cond (not order_able)
           (do (log/error "invalid openId or productId, openid: " openid ", pid: " pid)
-              (domain/failResponse 40200 "invalid order"))
+              (res/failResponse 40200 "invalid order"))
 
           (nil? (mg/add-order openid pid))
           (do (log/error "error creating order")
-              (domain/failResponse 40300 "order creation failed"))
+              (res/failResponse 40300 "order creation failed"))
 
           :else
           (do (log/info "new order created, openid: " openid ", pid: " pid)
-              (domain/succResponse {:status "succeed"})))))
+              (res/succResponse {:status "succeed"})))))

@@ -1,7 +1,7 @@
 (ns newbie.repository.mongodb
   (:require [monger.core :as mg]
             [monger.collection :as mc]
-            [newbie.util :as util]
+            [newbie.util.date-util :as date-util]
             [clojure.edn :as edn]
             )
   (:import [com.mongodb MongoOptions ServerAddress]
@@ -25,12 +25,12 @@
 
 (defn add-user [userinfo]
   (mc/insert db cu (-> userinfo
-                       util/createdAt
-                       util/updatedAt)))
+                       date-util/createdAt
+                       date-util/updatedAt)))
 
 (defn add-order [openid pid]
   (mc/insert db co (-> {:_id    (ObjectId.)
                         :openid openid
                         :pid    pid}
-                       util/createdAt
-                       util/updatedAt)))
+                       date-util/createdAt
+                       date-util/updatedAt)))

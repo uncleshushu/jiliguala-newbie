@@ -1,7 +1,8 @@
 (ns newbie.handler
   (:require [compojure.api.sweet :refer :all]
-            [newbie.domain :refer :all]
-            [newbie.user-service :as user]
+            [newbie.domain.schema :refer :all]
+            [newbie.service.user-service :as user]
+            [newbie.service.weixin-service :as weixin]
             [ring.util.http-response :refer :all]
             [ring.adapter.jetty :refer [run-jetty]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
@@ -31,12 +32,12 @@
         :tags ["weixin"]
         :query-params [code :- String, state :- String]
         :summary "回调接口，无法直接调用"
-        (ok (weixin-info code state)))
+        (ok (weixin/weixin-info code state)))
 
       (GET "/weixin-auth-info" []
         :tags ["weixin"]
         :summary "需要在微信客户端中运行"
-        (permanent-redirect (weixin-auth-info)))
+        (permanent-redirect (weixin/weixin-auth-info)))
       )
 
     (context "/user" []
