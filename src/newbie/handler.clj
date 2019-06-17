@@ -1,11 +1,12 @@
 (ns newbie.handler
   (:require [compojure.api.sweet :refer :all]
             [newbie.domain :refer :all]
+            [newbie.user-service :as user]
             [ring.util.http-response :refer :all]
             [ring.adapter.jetty :refer [run-jetty]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [ring.middleware.reload :refer [wrap-reload]]
-            ))
+            [schema.core :as s]))
 
 (def app
   (api
@@ -36,6 +37,37 @@
         :tags ["weixin"]
         :summary "需要在微信客户端中运行"
         (permanent-redirect (weixin-auth-info)))
+      )
+
+    (context "/user" []
+      :tags ["user"]
+
+      (POST "/register" []
+        :summary "注册用户"
+        :body [body {:openid s/Str
+                     (s/optional-key :sex) s/Str
+                     (s/optional-key :nickname) s/Str
+                     (s/optional-key :country) s/Str
+                     (s/optional-key :province) s/Str}]
+        (ok (user/register body)))
+
+      (POST "/login" []
+        :summary "注册用户"
+        :body [body {:openid s/Str}]
+        (let [response (user/login (:openid body))]
+          (if (:isSuccess response) (assoc-in (ok response) [:session :identity] body)
+                                    (ok response))))
+
+      (POST "/logout" []
+        :summary "注销用户"
+        :body [body {:openid s/Str}]
+        (assoc-in (ok) [:session :identity] nil))
+
+      (POST "/order" []
+        :summary "下订单"
+        :body [body {:openid s/Str
+                     :pid s/Str}]
+        (ok (user/order (:openid body) (:pid body))))
       )))
 
 (def reload-app

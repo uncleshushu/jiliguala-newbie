@@ -1,9 +1,10 @@
-(defproject newbie "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
+(defproject newbie "0.3.0"
+  :description "Jiliguala newbie project"
   :url "http://example.com/FIXME"
   :min-lein-version "2.0.0"
   :dependencies [
                  [clj-http "3.10.0"]
+                 [clj-time "0.15.0"]
                  [cheshire/cheshire "5.8.1"]
                  [org.clojure/clojure "1.10.0"]
                  [metosin/compojure-api "1.1.11"]
@@ -13,6 +14,7 @@
                  [org.apache.logging.log4j/log4j-slf4j-impl "2.11.2"]
                  [ring/ring-defaults "0.3.2"]
                  [ring/ring-codec "1.1.2"]
+                 [com.novemberain/monger "3.1.0"]
                  ]
   :plugins [[lein-ring "0.12.5"]]
   :ring {:handler newbie.handler/app}
