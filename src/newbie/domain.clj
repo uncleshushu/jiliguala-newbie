@@ -96,7 +96,7 @@
 (defn weixin-auth-info
   []
   (let [query-params {:appid APP_ID
-                      :redirect_uri (encoder/url-encode "http://nicky.free.idcfengye.com/api/weixin-info")
+                      :redirect_uri (encoder/url-encode "http://nickywu.vipgz1.idcfengye.com/api/weixin-info")
                       :response_type "code"
                       :scope SCOPE
                       :state STATE}]
