@@ -34,3 +34,12 @@
                         :pid    pid}
                        date-util/createdAt
                        date-util/updatedAt)))
+
+(defn clear-users []
+  (mc/remove db cu))
+
+(defn clear-orders []
+  (mc/remove db co))
+
+(defn clear-products []
+  (mc/remove db cp))

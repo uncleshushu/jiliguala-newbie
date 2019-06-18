@@ -1,4 +1,4 @@
-(defproject newbie "0.3.0"
+(defproject newbie "0.4.0"
   :description "Jiliguala newbie project"
   :url "http://example.com/FIXME"
   :min-lein-version "2.0.0"
@@ -16,7 +16,8 @@
                  [ring/ring-codec "1.1.2"]
                  [com.novemberain/monger "3.1.0"]
                  ]
-  :plugins [[lein-ring "0.12.5"]]
+  :plugins [[lein-ring "0.12.5"]
+            [lein-cloverage "1.1.1"]]
   :ring {:handler newbie.handler/app}
   :profiles {
              :dev {:dependencies [[javax.servlet/javax.servlet-api "3.1.0"]

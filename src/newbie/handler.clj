@@ -3,6 +3,7 @@
             [newbie.domain.schema :refer :all]
             [newbie.service.user-service :as user]
             [newbie.service.weixin-service :as weixin]
+            [newbie.service.base-service :as base]
             [ring.util.http-response :refer :all]
             [ring.adapter.jetty :refer [run-jetty]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
@@ -23,15 +24,15 @@
       :tags ["api"]
 
       (GET "/hello-world" []
-        :return Base
+        :return Response
         :summary "Hello World"
-        (ok (hello-world)))
+        (ok (base/hello-world)))
 
       (GET "/weixin-info" []
         :return Response
         :tags ["weixin"]
         :query-params [code :- String, state :- String]
-        :summary "回调接口，无法直接调用"
+        :summary "微信回调接口"
         (ok (weixin/weixin-info code state)))
 
       (GET "/weixin-auth-info" []
