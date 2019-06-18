@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/NickYadance/jiliguala-newbie.svg?branch=master)](https://travis-ci.org/NickYadance/jiliguala-newbie)
 ### Clojure 新人项目
 - [ ] 基础语法：https://github.com/functional-koans/clojure-koans.git
 - [ ] 基于[compojure + ring](https://github.com/weavejester/compojure)搭建一个HTTP Server，提供HTTP接口，输出Hello World，使用Postman进行测试
