@@ -1,4 +1,4 @@
-(defproject newbie "0.4.0"
+(defproject newbie "0.5.0.release"
   :description "Jiliguala newbie project"
   :url "http://example.com/FIXME"
   :min-lein-version "2.0.0"
