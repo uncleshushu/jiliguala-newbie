@@ -1,4 +1,4 @@
-(defproject newbie "0.5.0.release"
+(defproject newbie "0.5.1.release"
   :description "Jiliguala newbie project"
   :url "http://example.com/FIXME"
   :min-lein-version "2.0.0"
@@ -6,6 +6,7 @@
                  [clj-http "3.10.0"]
                  [clj-time "0.15.0"]
                  [cheshire/cheshire "5.8.1"]
+                 [cprop/cprop "0.1.13"]
                  [org.clojure/clojure "1.10.0"]
                  [metosin/compojure-api "1.1.11"]
                  [ring/ring-jetty-adapter "1.7.1"]

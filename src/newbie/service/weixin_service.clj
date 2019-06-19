@@ -22,8 +22,9 @@
                                              :secret APP_SECRET
                                              :code code
                                              :grant_type "authorization_code"}
-                              :timeout TIMEOUT})
-          weixin-response (cheshire/parse-string (:body result) true)]
+                              :timeout TIMEOUT
+                              :as :json})
+          weixin-response (:body result)]
       (log/info "access token response: " weixin-response)
       (if (:errcode weixin-response)
         (do
@@ -31,7 +32,8 @@
           (res/failResponse weixin-response))
         (res/succResponse weixin-response)))
     (catch Exception e
-      (log/error ( "get access token error: " (.getMessage e))))))
+      (do (log/error "get access token error: " (.getMessage e))
+          (res/failResponse 50100 (.getMessage e))))))
 
 (defn get-weixin-info
   [access_token openid]
@@ -40,8 +42,9 @@
                              {:query-params {:access_token access_token
                                              :openid openid
                                              :lang "zh_CN"}
-                              :timeout TIMEOUT})
-          weixin-response (cheshire/parse-string (:body result) true)]
+                              :timeout TIMEOUT
+                              :as :json})
+          weixin-response (:body result)]
       (log/info "userinfo response: " weixin-response)
       (if (:errcode weixin-response)
         (do

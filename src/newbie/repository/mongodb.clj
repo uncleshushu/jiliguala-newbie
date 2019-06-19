@@ -1,13 +1,15 @@
 (ns newbie.repository.mongodb
-  (:require [monger.core :as mg]
-            [monger.collection :as mc]
-            [newbie.util.date-util :as date-util]
-            [clojure.edn :as edn]
-            )
+  (:require
+    [cprop.core :refer [load-config]]
+    [monger.core :as mg]
+    [monger.collection :as mc]
+    [newbie.util.date-util :as date-util]
+    [clojure.edn :as edn]
+    )
   (:import [com.mongodb MongoOptions ServerAddress]
            (org.bson.types ObjectId)))
 
-(def config (edn/read-string (slurp (clojure.java.io/resource "mongodb.edn"))))
+(def config (load-config :resource "mongodb.edn"))
 (def conn (let [^MongoOptions opts (mg/mongo-options (:option config))
                 ^ServerAddress sa (mg/server-address (:host-address config) (:port config))]
             (mg/connect sa opts)))
