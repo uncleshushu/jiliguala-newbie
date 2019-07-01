@@ -1,7 +1,7 @@
 ### Clojure 新人项目
 [![Build Status](https://travis-ci.org/NickYadance/jiliguala-newbie.svg?branch=master)](https://travis-ci.org/NickYadance/jiliguala-newbie)
 [![codecov](https://codecov.io/gh/NickYadance/jiliguala-newbie/branch/master/graph/badge.svg)](https://codecov.io/gh/NickYadance/jiliguala-newbie)
-- [ ] （可选）完成基础语法https://github.com/functional-koans/clojure-koans.git的所有练习
+- [ ] （可选）完成[基础语法的所有练习](https://github.com/functional-koans/clojure-koans) （[在线版](http://clojurescriptkoans.com)）
 - [ ] 基于[compojure-api + ring](https://github.com/metosin/compojure-api)搭建一个HTTP Rest Server，
 提供接口输出Hello World，使用Postman进行测试
 - [ ] 接入log4j2，为线上/线下提供不同的配置文件
