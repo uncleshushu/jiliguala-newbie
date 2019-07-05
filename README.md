@@ -1,4 +1,8 @@
-# Clojure 新人项目
+# jiliguala-newbie
+
+Clojure 新人项目
+
+## TODO
 
 - [ ] （可选）完成[基础语法的所有练习](https://github.com/functional-koans/clojure-koans) （[在线版](http://clojurescriptkoans.com)）
 
@@ -14,3 +18,20 @@
 - [ ] 在db中构造一个用户-订单关系，提供用户注册、注销、登录、下单等接口，使用Postman测试
 
 - [ ] 编写单测，接入travis ci 和 cloverage。生成单测报告，要求code coverage在50%以上
+
+## Usage
+
+### Run the application locally
+
+`lein ring server`
+
+### Packaging and running as standalone jar
+
+```
+lein do clean, ring uberjar
+java -jar target/server.jar
+```
+
+### Packaging as war
+
+`lein ring uberwar`
