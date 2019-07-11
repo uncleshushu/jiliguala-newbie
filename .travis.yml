@@ -1,0 +1,25 @@
+language: clojure
+dist: xenial
+lein: lein
+before_script:
+  - bash ./bin/ci/before_script.sh
+script:
+  - lein do clean, test
+jdk:
+  - openjdk8
+  - oraclejdk8
+  - openjdk11
+  - oraclejdk11
+after_success:
+  - lein cloverage --codecov
+  - bash <(curl -s https://codecov.io/bash)
+before_deploy:
+  - lein with-profile prod ring uberjar
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file_glob: true
+  file: "*-standalone.jar"
+  on:
+    tags: true
