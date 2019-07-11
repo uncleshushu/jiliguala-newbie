@@ -9,7 +9,7 @@
                  [metosin/compojure-api "1.1.12"]
                  ;; explicitly set dependency `ordered`'s version
                  ;; to workaround some bug
-                 ;[org.flatland/ordered "1.5.7"]
+                 [org.flatland/ordered "1.5.7"]
                  ]
   :ring {:handler jiliguala-newbie.core/app
          :port    3000
