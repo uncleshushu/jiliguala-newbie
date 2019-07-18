@@ -1,7 +1,8 @@
 (ns jiliguala-newbie.routes.web
-  (:require [compojure.api.sweet :refer :all]
+  (:require [clojure.tools.logging :as log]
+            [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
-            ))
+            [jiliguala-newbie.api.wechat :as wechat]))
 
 (def web
   (context "/" []
@@ -11,5 +12,4 @@
     (GET "/" []
       :return String
       :summary "index page"
-      (ok "Hello world!"))
-    ))
+      (ok "Hello world!"))))

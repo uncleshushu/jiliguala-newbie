@@ -12,3 +12,7 @@ pom.xml.asc
 *.iml
 .idea
 
+.DS_Store
+
+/resources/private/*
+!*.gpg

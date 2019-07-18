@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+lein cljfmt fix
+
+cd resources/private/
+rm -f *.gpg *.tar
+tar -cf conf.tar *
+gpg --batch --passphrase-file gpg-passphrase.txt -c conf.tar
+
+git add .

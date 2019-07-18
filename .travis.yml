@@ -1,25 +1,30 @@
 language: clojure
 dist: xenial
 lein: lein
+jdk:
+  - openjdk8
+  ## can't install on xenial
+  #  - oraclejdk8
+  - openjdk11
+  - oraclejdk11
 before_script:
   - bash ./bin/ci/before_script.sh
 script:
-  - lein do clean, test
-jdk:
-  - openjdk8
-#  - oraclejdk8
-  - openjdk11
-  - oraclejdk11
+  - lein do clean, cloverage --codecov
 after_success:
-  - lein cloverage --codecov
   - bash <(curl -s https://codecov.io/bash)
 before_deploy:
+  ## TODO: different profiles
   - lein with-profile prod ring uberjar
+#  - lein with-profile github-release ring uberjar
 deploy:
-  skip_cleanup: true
-  provider: releases
-  api_key: $GITHUB_TOKEN
-  file_glob: true
-  file: "*-standalone.jar"
-  on:
-    tags: true
+  ## TODO: different providers
+#  - provider: releases
+#    api_key: $GITHUB_TOKEN
+#    skip_cleanup: true
+#    file_glob: true
+#    on:
+#      tags: true
+#    ## TODO: uberjar path
+#    file: "target/uberjar/*-standalone.jar"
+
